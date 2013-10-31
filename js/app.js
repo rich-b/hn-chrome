@@ -13,8 +13,7 @@ angular.module('myApp', [])
 
                 $http({
                     method: 'GET',
-                    url: baseUri + '&sortby=create_ts%20desc',
-                    cache: true
+                    url: baseUri + '&sortby=create_ts%20desc'
                 }).success(function (data) {
                     d.resolve(data);
                 }).error(function (err) {
@@ -27,8 +26,7 @@ angular.module('myApp', [])
 
                 $http({
                     method: 'GET',
-                    url: baseUri + '&sortby=create_ts%20desc',
-                    cache: true
+                    url: baseUri + '&sortby=create_ts%20desc'
                 }).success(function (data) {
                     d.resolve(data);
                 }).error(function (err) {
@@ -41,8 +39,7 @@ angular.module('myApp', [])
 
                 $http({
                     method: 'GET',
-                    url: baseUri + '&sortby=create_ts%20desc',
-                    cache: true
+                    url: baseUri + '&sortby=create_ts%20desc'
                 }).success(function (data) {
                     d.resolve(data);
                 }).error(function (err) {
@@ -68,32 +65,52 @@ angular.module('myApp', [])
           controller: 'BestCtrl'
       })
       .when('/about', {
-          templateUrl: 'templates/about.html'          
+          templateUrl: 'templates/about.html'
       })
       .otherwise({ redirectTo: '/' });
 }])
 .controller('MainCtrl',
   function ($scope, $timeout, HackerNews) {
-      HackerNews.getNewest().then(populateItems);
+      function getData() {
+          HackerNews.getNewest().then(populateItems);
+      }
+      getData();
 
       function populateItems(data) {
-          console.log(data);
           $scope.articleList = data.results;
       }
+
+      $scope.refresh = function () {
+          getData();
+      };
   })
 .controller('FrontPageCtrl',
   function ($scope, $timeout, HackerNews) {
-      HackerNews.getFrontPage().then(populateItems);
+      function getData() {
+          HackerNews.getFrontPage().then(populateItems);
+      }
+      getData();
 
       function populateItems(data) {
           $scope.articleList = data.results;
       }
+
+      $scope.refresh = function () {
+          getData();
+      };
   })
 .controller('BestCtrl',
   function ($scope, $timeout, HackerNews) {
-      HackerNews.getBest().then(populateItems);
+      function getData() {
+          HackerNews.getBest().then(populateItems);
+      }
+      getData();
 
       function populateItems(data) {
           $scope.articleList = data.results;
       }
+
+      $scope.refresh = function () {
+          getData();
+      };
   })

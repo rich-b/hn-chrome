@@ -1,13 +1,25 @@
-<table border="0" cellpadding="0" cellspacing="0">
+<table class="table table-striped table-bordered table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>Article
+            </th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="articleItem in articleList">
+            <td>{{$index + 1}}. <a href="{{ articleItem.item.url }}" target="_blank">{{ articleItem.item.title }}</a></td>
+            <td>{{ articleItem.item.points}}</td>
+        </tr>
+    </tbody>
+</table>
+<!--<table border="0" cellpadding="0" cellspacing="0">
     <tbody ng-repeat="articleItem in articleList">
         <tr>
             <td align="right" valign="top" class="title">{{$index + 1}}.</td>
             <td>
                 <center>
-					<a href="https://news.ycombinator.com/vote?for={{articleItem.item.id}}&amp;dir=up&amp;whence=%6e%65%77%73" target="_blank">
-						<div class="votearrow" title="upvote"></div>
-					</a>
-					<span id="down_6648493"></span>
+					<a href="https://news.ycombinator.com/vote?for={{articleItem.item.id}}&amp;dir=up&amp;whence=%6e%65%77%73" target="_blank"></a>					
 				</center>
             </td>
             <td class="title">
@@ -20,4 +32,4 @@
         </tr>
         <tr style="height: 5px"></tr>
     </tbody>
-</table>
+</table>-->
