@@ -14,20 +14,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Hacked News</a>
+                </button>                
+                <img class="logo" src="hn-128.png" height="24" width="24" />
+                <a class="navbar-brand" href="/">Hacked News</a>                
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li class="active"><a href="/">New</a></li>
+                    <li><a href="/hot">FrontPage</a></li>
+                    <li><a href="/best">Best</a></li>
+                    <li><a href="/about">About</a></li>
                 </ul>
             </div>
-
         </div>
     </div>
-    <div class="container">
+
+    <div class="container main-content">
         <div data-ng-view></div>
     </div>
     <script src="./js/angular-1.1.0.min.js"></script>
