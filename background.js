@@ -2,7 +2,7 @@
 	var screenWidth = screen.availWidth;
 	var screenHeight = screen.availHeight;
 	var width = 600;
-	var height = 200;
+	var height = 350;
 
     chrome.app.window.create('tab.html', {
         'bounds': {
