@@ -10,5 +10,6 @@
     "background": {
       "scripts": ["background.js"]
     }
-  }  
+  },
+  "icons": { "16": "hn.png", "128": "hn-128.png" }
 }
