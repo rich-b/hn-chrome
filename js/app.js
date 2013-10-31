@@ -1,4 +1,4 @@
-angular.module('myApp', ['ngRoute'])
+angular.module('myApp', [])
 .provider('HackerNews', function () {
 
     this.getUrl = function () {
@@ -62,10 +62,10 @@ angular.module('myApp', ['ngRoute'])
           templateUrl: 'templates/home.html',
           controller: 'MainCtrl'
       })
-      //.when('/settings', {
-      //    templateUrl: 'templates/settings.html',
-      //    controller: 'SettingsCtrl'
-      //})
+      .when('/settings', {
+          templateUrl: 'templates/settings.html',
+          controller: 'SettingsCtrl'
+      })
       .otherwise({ redirectTo: '/' });
 }])
 .controller('MainCtrl',
