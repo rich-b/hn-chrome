@@ -1,31 +1,14 @@
 angular.module('myApp', [])
 .provider('HackerNews', function () {
-
-    this.getUrl = function () {
-        return "http://api.ihackernews.com/page";
-    };
-
     this.$get = function ($q, $http) {
         return {
-            getList: function (city) {
+            getNewest: function (city) {
                 var d = $q.defer();
 
                 $http({
                     method: 'GET',
-                    url: 'http://api.ihackernews.com/page',
+                    url: 'http://api.thriftdb.com/api.hnsearch.com/items/_search?sortby=create_ts%20desc&limit=100&filter[queries][]=url:*',
                     cache: true
-                }).success(function (data) {
-                    d.resolve(data);
-                }).error(function (err) {
-                    d.reject(err);
-                });
-                return d.promise;
-            },
-            getPost: function (id) {
-                var d = $q.defer();
-                $http({
-                    method: 'GET',
-                    url: "http://api.ihackernews.com/post/" + id
                 }).success(function (data) {
                     d.resolve(data);
                 }).error(function (err) {
@@ -80,9 +63,9 @@ angular.module('myApp', [])
       };
 
       $scope.user = UserService.user;
-      HackerNews.getList()
-      .then(function (data) {          
-          $scope.articleList = data.items;
+      HackerNews.getNewest()
+      .then(function (data) {
+          $scope.articleList = data.results;
       });
       updateTime();
   })
