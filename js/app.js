@@ -26,7 +26,7 @@ angular.module('myApp', [])
 
                 $http({
                     method: 'GET',
-                    url: baseUri + '&sortby=create_ts%20desc'
+                    url: baseUri + '&boosts[functions][pow(2,div(div(ms(create_ts,NOW),3600000),72))]=2000.0&boosts[fields][points]=.5&boosts[fields][num_comments]=1.25'
                 }).success(function (data) {
                     d.resolve(data);
                 }).error(function (err) {
