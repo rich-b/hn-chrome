@@ -1,13 +1,47 @@
+$('.navbar a').on('click', function () {
+    console.log('test');
+    $(".navbar-toggle").click();
+});
+
 angular.module('myApp', [])
 .provider('HackerNews', function () {
     this.$get = function ($q, $http) {
+        var baseUri = 'http://api.thriftdb.com/api.hnsearch.com/items/_search?limit=100&filter[queries][]=url:*';
         return {
-            getNewest: function (city) {
+            getNewest: function () {
                 var d = $q.defer();
 
                 $http({
                     method: 'GET',
-                    url: 'http://api.thriftdb.com/api.hnsearch.com/items/_search?sortby=create_ts%20desc&limit=100&filter[queries][]=url:*',
+                    url: baseUri + '&sortby=create_ts%20desc',
+                    cache: true
+                }).success(function (data) {
+                    d.resolve(data);
+                }).error(function (err) {
+                    d.reject(err);
+                });
+                return d.promise;
+            },
+            getFrontPage: function () {
+                var d = $q.defer();
+
+                $http({
+                    method: 'GET',
+                    url: baseUri + '&sortby=create_ts%20desc',
+                    cache: true
+                }).success(function (data) {
+                    d.resolve(data);
+                }).error(function (err) {
+                    d.reject(err);
+                });
+                return d.promise;
+            },
+            getBest: function () {
+                var d = $q.defer();
+
+                $http({
+                    method: 'GET',
+                    url: baseUri + '&sortby=create_ts%20desc',
                     cache: true
                 }).success(function (data) {
                     d.resolve(data);
@@ -19,53 +53,47 @@ angular.module('myApp', [])
         };
     };
 })
-.factory('UserService', function () {
-    var defaults = {
-        location: 'autoip'
-    };
-
-    var service = {
-        user: {},
-        save: function () {
-            sessionStorage.presently =
-              angular.toJson(service.user);
-        },
-        restore: function () {
-            service.user =
-              angular.fromJson(sessionStorage.presently) || defaults
-
-            return service.user;
-        }
-    };
-    service.restore();
-    return service;
-})
 .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
           templateUrl: 'templates/home.html',
           controller: 'MainCtrl'
       })
-      .when('/settings', {
-          templateUrl: 'templates/settings.html',
-          controller: 'SettingsCtrl'
+      .when('/front-page', {
+          templateUrl: 'templates/front-page.html',
+          controller: 'FrontPageCtrl'
+      })
+      .when('/best', {
+          templateUrl: 'templates/best.html',
+          controller: 'BestCtrl'
+      })
+      .when('/about', {
+          templateUrl: 'templates/about.html'          
       })
       .otherwise({ redirectTo: '/' });
 }])
 .controller('MainCtrl',
-  function ($scope, $timeout, HackerNews, UserService) {
-      $scope.date = {};
+  function ($scope, $timeout, HackerNews) {
+      HackerNews.getNewest().then(populateItems);
 
-      var updateTime = function () {
-          $scope.date.tz = new Date(new Date()
-              .toLocaleString("en-US", { timeZone: $scope.user.timezone }));
-          $timeout(updateTime, 1000);
-      };
-
-      $scope.user = UserService.user;
-      HackerNews.getNewest()
-      .then(function (data) {
+      function populateItems(data) {
+          console.log(data);
           $scope.articleList = data.results;
-      });
-      updateTime();
+      }
+  })
+.controller('FrontPageCtrl',
+  function ($scope, $timeout, HackerNews) {
+      HackerNews.getFrontPage().then(populateItems);
+
+      function populateItems(data) {
+          $scope.articleList = data.results;
+      }
+  })
+.controller('BestCtrl',
+  function ($scope, $timeout, HackerNews) {
+      HackerNews.getBest().then(populateItems);
+
+      function populateItems(data) {
+          $scope.articleList = data.results;
+      }
   })
