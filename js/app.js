@@ -5,29 +5,30 @@ angular.module('myApp', [])
         return "http://api.ihackernews.com/page";
     };
 
-    this.$get = function($q, $http) {
+    this.$get = function ($q, $http) {
         return {
-            getList: function(city) {
+            getList: function (city) {
                 var d = $q.defer();
+
                 $http({
                     method: 'GET',
                     url: 'http://api.ihackernews.com/page',
                     cache: true
-                }).success(function(data) {
+                }).success(function (data) {
                     d.resolve(data);
-                }).error(function(err) {
+                }).error(function (err) {
                     d.reject(err);
                 });
                 return d.promise;
             },
-            getPost: function(id) {
+            getPost: function (id) {
                 var d = $q.defer();
                 $http({
                     method: 'GET',
                     url: "http://api.ihackernews.com/post/" + id
-                }).success(function(data) {
+                }).success(function (data) {
                     d.resolve(data);
-                }).error(function(err) {
+                }).error(function (err) {
                     d.reject(err);
                 });
                 return d.promise;
@@ -72,7 +73,7 @@ angular.module('myApp', [])
   function ($scope, $timeout, HackerNews, UserService) {
       $scope.date = {};
 
-      var updateTime = function() {
+      var updateTime = function () {
           $scope.date.tz = new Date(new Date()
               .toLocaleString("en-US", { timeZone: $scope.user.timezone }));
           $timeout(updateTime, 1000);
@@ -80,8 +81,8 @@ angular.module('myApp', [])
 
       $scope.user = UserService.user;
       HackerNews.getList()
-      .then(function (data) {
-          $scope.articleList = data;
+      .then(function (data) {          
+          $scope.articleList = data.items;
       });
       updateTime();
   })

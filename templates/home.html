@@ -2,10 +2,9 @@
  {{date}}
   <div id="article-list">
     <ul class="row list-unstyled">
-      <li ng-repeat="articleItem in articleList.items" class="col-md-3">
+      <li ng-repeat="articleItem in articleList" class="col-md-3">
         <span>
-          <h3>{{ item.title }}</h3>
-
+          <h3>{{ articleItem.title }}</h3>
         </span>
       </li>
     </ul>

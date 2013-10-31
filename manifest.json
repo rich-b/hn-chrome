@@ -4,7 +4,7 @@
   "description": "A chrome app for HN",
   "version": "0.1",
   "permissions": [
-
+	"<all_urls>"
   ],
   "app": {
     "background": {
